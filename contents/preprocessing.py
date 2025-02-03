@@ -7,7 +7,7 @@ from scipy.stats import chi2_contingency
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBRegressor
-import koreanize_matplotlib
+# import koreanize_matplotlib
 import pickle
 
 
