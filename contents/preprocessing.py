@@ -97,9 +97,9 @@ def run():
     with col1:
         df_btr = df_1.dropna()
         df_btr = df_btr[['제조사','모델','차량상태','보증기간(년)','배터리용량']]
-        st.write("""###
+        st.code("
                  df_btr = (df_btr.groupby(['제조사','모델','차량상태','보증기간(년)','배터리용량'])[['배터리용량']].agg(카운트=('배터리용량','count')))
-                 """)
+                 ")
         df_btr = df_btr.groupby(['제조사','모델','차량상태','보증기간(년)','배터리용량'])[['배터리용량']].agg(카운트=('배터리용량','count')).reset_index().sort_values(by=['제조사','모델','카운트'], ascending=False)
         df_btr.rename(columns={'배터리용량':'배터리'},inplace=True)
     
@@ -109,9 +109,9 @@ def run():
     with col2:
         # 차량상태 데이터 정리
         # 가장 빈도가 높은 항목만 남기고 중복된 값을 제거
-        st.write("""###
+        st.code("
                  df_btr = df_btr.drop_duplicates(subset=['제조사','모델','차량상태','보증기간(년)'])
-                 """)
+                 ")
         df_btr = df_btr.drop_duplicates(subset=['제조사','모델','차량상태','보증기간(년)'])
         # df_btr2.drop(columns='카운트', inplace=True)
         st.write(f'- 중복 제거 후 df_btr.shape: {df_btr.shape}')
@@ -127,9 +127,9 @@ def run():
     with col1:
         df_1 = pd.merge(df_1, df_btr, on=['제조사','모델','차량상태','보증기간(년)'], how='left')
         st.write(f'- 병합 후')
-        st.write(f"""###
+        st.code(f"
                 df_1 = pd.merge(df_1, df_btr, on=['제조사','모델','차량상태','보증기간(년)'], how='left')
-                 """)
+                 ")
         st.write(f'- df_1.head()')
         st.dataframe(df_1, hide_index=True)
         st.dataframe(df_1.isna().sum())
@@ -137,9 +137,9 @@ def run():
         st.write(f"- \'배터리용량\'결측치 \'배터리\' 값 대체")
         df_1.loc[df_1['배터리용량'].isna(),'배터리용량'] = df_1.loc[df_1['배터리용량'].isna(),'배터리']
         df_1.drop('배터리',axis=1, inplace=True)
-        st.write(f"""###
+        st.code(f"
             df_1.loc[df_1['배터리용량'].isna(),'배터리용량'] = df_1.loc[df_1['배터리용량'].isna(),'배터리']
-            """)
+            ")
         st.write(f'- df_1.head()')
         st.dataframe(df_1, hide_index=True)
         st.dataframe(df_1.isna().sum())
